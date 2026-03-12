@@ -2,6 +2,7 @@ import time
 from google_news import search_news
 from jne_api import get_candidates
 from filter_candidates import filter_candidates
+from notion_api import save_data_to_notion
 from openai_llm_analysis import news_llm_analyzer
 
 # Variables
@@ -15,8 +16,10 @@ def main():
     #Capturamos el tiempo de inicio
     start_time = time.time()
 
-    print(news_llm_analyzer("KEIKO SOFIA FUJIMORI HIGUCHI"))
-
+    # Test02
+    # Obtengo el resultado del análisis
+    result = news_llm_analyzer("KEIKO SOFIA FUJIMORI HIGUCHI")
+    save_data_to_notion(None, result)
 
     # #Obtenemos los candidatos
     # candidates = get_candidates()

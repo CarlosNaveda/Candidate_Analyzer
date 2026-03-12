@@ -19,7 +19,7 @@ def search_news(name_candidate):
 
     source_news = []
 
-    for noticia in response_xml_tree.findall(".//item")[:10]:
+    for noticia in response_xml_tree.findall(".//item")[:5]:
 
         title = noticia.find("title").text
         news_url = noticia.find("link").text
@@ -40,12 +40,12 @@ def search_news(name_candidate):
 
 def format_news(source_news):
     formatted = []
+    #No considero el url ya que consume muchos tokens en el input
     for i, news in enumerate(source_news,1):
         formatted.append(
 f"""
 number_news: {i}
 title: {news["title"]}
-news_url: {news["news_url"]}
 publish_date: {news["publish_date"]}
 source: {news["source"]}                        
 """

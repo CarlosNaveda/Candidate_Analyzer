@@ -13,13 +13,6 @@ def news_llm_analyzer(candidate):
     news = search_news(candidate)
     news_formatted = format_news(news)
 
-    #Mostramos las noticias que analizará
-    print(f"""
-Contexto de Noticias
-{news_formatted}
-"""
-         )
-
     #Armamos el prompt
     prompt = f"""
 Eres un analista neutral que evalúa riesgos legales y controversias de candidatos políticos del Perú.
@@ -73,24 +66,40 @@ Responde SOLO en JSON con esta estructura exacta:
 "summary": "explicación corta y neutral del análisis",
 "confidence": 0.0-1.0
 }}
+
+clean, legal_issues y controversies deben ser booleanos reales (true, false o null).
+Tu respuesta debe contener únicamente el JSON.
 """
     response = client.responses.create(
         model="gpt-4.1-mini",
         input=prompt
     )
 
-    #Mostramos el costo del uso del LLM
-    show_usage(response.usage)
-
     #Formateamos el resultado a JSON
     try:
-        result = json.loads(response.output_text.strip())
+        output = response.output_text.strip()
+
+        # limpiar markdown
+        if "```" in output:
+            output = output.split("```")[1]
+            output = output.replace("json", "").strip()
+
+        analysis = json.loads(output)
+
     except json.decoder.JSONDecodeError as e:
-        print("Error:", e)
-        print("Output:", response.output_text)
+        print("JSON parse failed:", e)
+        print("RAW OUTPUT:")
+        print(response.output_text)
         return None
 
-    return result
+    # Obtenemos el costo del LLM
+    usage = show_usage(response.usage)
+
+    return {
+        "analysis": analysis,
+        "news_formatted": news_formatted,
+        "usage": usage
+    }
 
 
 def show_usage(usage):
@@ -104,7 +113,17 @@ def show_usage(usage):
     output_cost = output_tokens * 1.60 / 1_000_000
     total_cost = input_cost + output_cost
 
-    print("Input tokens:", input_tokens)
-    print("Output tokens:", output_tokens)
-    print("Total tokens:", total_tokens)
-    print(f"Total Cost: ${total_cost:.6f}")
+    usage_text = f"""
+Model: gpt-4.1-mini
+Input tokens: {input_tokens}
+Output tokens: {output_tokens}
+Total tokens: {total_tokens}
+Total Cost $: {total_cost:.6f}
+"""
+
+    return usage_text.strip()
+
+def format_events(events):
+    return ", ".join(events)
+
+
