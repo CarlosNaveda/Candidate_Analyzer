@@ -21,17 +21,17 @@ def main():
 
     #Filtramos los candidatos | Solo presidenciales
     candidates_presidential = filter_candidates(all_candidates, president_tag)
+    candidates_first_vicepresident = filter_candidates(all_candidates, first_vicepresident_tag)
+    candidates_second_vicepresident = filter_candidates(all_candidates, second_vicepresident_tag)
 
-    for candidate in candidates_presidential:
+    # Evaluamos los candidatos a Presidentes
+    candidate_evaluation(candidates_presidential)
 
-        # Por cada candidato llamamos al analizador LLM
-        print("🔎 Analizando candidato: " + candidate["full_name"])
-        result = news_llm_analyzer(candidate)
+    # Evaluamos los candidatos a Primer Vicepresidente
+    candidate_evaluation(candidates_first_vicepresident)
 
-        # Guardamos la información en Notion
-        print("📝 Grabando información en notion...")
-        save_data_to_notion(candidate, result)
-
+    # Evaluamos los candidatos a Segundo Vicepresidente
+    candidate_evaluation(candidates_second_vicepresident)
 
     # Capturamos el tiempo de fin
     end_time = time.time()
@@ -39,6 +39,19 @@ def main():
     #Mostramos el tiempo de ejecución
     execution_time = end_time - start_time
     print(f"⏱️ Tiempo de Ejecución: {execution_time:.2f} seconds")
+
+
+def candidate_evaluation(candidate_group):
+
+    # Evaluamos los candidatos dentro del grupo recibido
+    for candidate in candidate_group[:1]:
+        # Por cada candidato llamamos al analizador LLM
+        print("🔎 Analizando candidato: " + candidate["full_name"])
+        result = news_llm_analyzer(candidate)
+
+        # Guardamos la información en Notion
+        print("📝 Grabando información en notion...")
+        save_data_to_notion(candidate, result)
 
 
 if __name__ == "__main__":
