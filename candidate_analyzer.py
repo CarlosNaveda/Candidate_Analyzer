@@ -1,8 +1,8 @@
 import time
 from google_news import search_news
-from jne_api import get_candidates
+from jne_api import *
 from filter_candidates import filter_candidates
-from notion_api import save_data_to_notion
+from notion_api import save_data_safe_to_notion
 from openai_llm_analysis import news_llm_analyzer
 
 # Variables
@@ -16,22 +16,20 @@ def main():
     #Capturamos el tiempo de inicio
     start_time = time.time()
 
-    #Obtenemos los candidatos
-    all_candidates = get_candidates()
+    #Obtenemos los candidatos presidenciales y vicepresidenciales
+    all_candidates_president_vicepresident = get_candidates_president_vicepresident()
+    all_candidates_deputies = get_candidates_deputies()
 
-    #Filtramos los candidatos | Solo presidenciales
-    candidates_presidential = filter_candidates(all_candidates, president_tag)
-    candidates_first_vicepresident = filter_candidates(all_candidates, first_vicepresident_tag)
-    candidates_second_vicepresident = filter_candidates(all_candidates, second_vicepresident_tag)
+    #Filtramos los candidatos
+    candidates_presidential = filter_candidates(all_candidates_president_vicepresident, president_tag)
+    candidates_first_vicepresident = filter_candidates(all_candidates_president_vicepresident, first_vicepresident_tag)
+    candidates_second_vicepresident = filter_candidates(all_candidates_president_vicepresident, second_vicepresident_tag)
 
-    # Evaluamos los candidatos a Presidentes
+    # Evaluamos los candidatos
     candidate_evaluation(candidates_presidential)
-
-    # Evaluamos los candidatos a Primer Vicepresidente
     candidate_evaluation(candidates_first_vicepresident)
-
-    # Evaluamos los candidatos a Segundo Vicepresidente
     candidate_evaluation(candidates_second_vicepresident)
+    candidate_evaluation(all_candidates_deputies)
 
     # Capturamos el tiempo de fin
     end_time = time.time()
@@ -51,7 +49,7 @@ def candidate_evaluation(candidate_group):
 
         # Guardamos la información en Notion
         print("📝 Grabando información en notion...")
-        save_data_to_notion(candidate, result)
+        save_data_safe_to_notion(candidate, result,3,5)
 
 
 if __name__ == "__main__":
