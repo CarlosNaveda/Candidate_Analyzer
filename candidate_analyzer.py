@@ -44,7 +44,7 @@ def main():
 def candidate_evaluation(candidate_group):
 
     # Evaluamos los candidatos dentro del grupo recibido
-    for candidate in candidate_group[:1]:
+    for candidate in candidate_group:
         # Por cada candidato llamamos al analizador LLM
         print("🔎 Analizando candidato: " + candidate["full_name"])
         result = news_llm_analyzer(candidate)
