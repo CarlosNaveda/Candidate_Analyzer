@@ -16,41 +16,29 @@ def main():
     #Capturamos el tiempo de inicio
     start_time = time.time()
 
-    # Test02
-    # Obtengo el resultado del análisis
-    result = news_llm_analyzer("KEIKO SOFIA FUJIMORI HIGUCHI")
-    save_data_to_notion(None, result)
+    #Obtenemos los candidatos
+    all_candidates = get_candidates()
 
-    # #Obtenemos los candidatos
-    # candidates = get_candidates()
-    #
-    # #Filtramos los candidatos | Solo presidenciales
-    # candidates_presidential = filter_candidates(candidates, president_tag)
-    #
-    # candidates_analyzer_results = []
-    #
-    # for c in candidates_presidential:
-    #
-    #     news = search_news(c["full_name"])    # Obtenemos las noticias riesgosas del candidato
-    #
-    #     candidates_analyzer_results.append({
-    #         "full_name": c["full_name"],
-    #         "dni" : c['dni'],
-    #         "sex": c['sex'],
-    #         "apply_position" : c['apply_position'],
-    #         "political_party": c['political_party'],
-    #         "news": news,
-    #     })
-    #
-    # for a in candidates_analyzer_results:
-    #     print(a)
+    #Filtramos los candidatos | Solo presidenciales
+    candidates_presidential = filter_candidates(all_candidates, president_tag)
+
+    for candidate in candidates_presidential:
+
+        # Por cada candidato llamamos al analizador LLM
+        print("🔎 Analizando candidato: " + candidate["full_name"])
+        result = news_llm_analyzer(candidate)
+
+        # Guardamos la información en Notion
+        print("📝 Grabando información en notion...")
+        save_data_to_notion(candidate, result)
+
 
     # Capturamos el tiempo de fin
     end_time = time.time()
 
     #Mostramos el tiempo de ejecución
     execution_time = end_time - start_time
-    print(f"Execution time: {execution_time:.2f} seconds")
+    print(f"⏱️ Tiempo de Ejecución: {execution_time:.2f} seconds")
 
 
 if __name__ == "__main__":

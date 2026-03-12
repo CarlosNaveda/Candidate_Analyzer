@@ -11,16 +11,6 @@ database_id = os.getenv("NOTION_DATABASE_ID")
 
 def save_data_to_notion(candidate, result):
 
-    #Dummy data
-    candidate = {
-        "full_name": "KEIKO SOFIA FUJIMORI HIGUCHIAAA",
-        "dni": "10001088",
-        "sex": "FEMENINO",
-        "apply_position": "PRESIDENTE DE LA REPÚBLICA",
-        "partido": "FUERZA POPULAR",
-        "political_party": "Titulares separados por |"
-    }
-
     #Variables del candidato
     full_name = candidate["full_name"]
     dni = candidate["dni"]
@@ -43,17 +33,17 @@ def save_data_to_notion(candidate, result):
     # Variable del uso del LLM
     usage = result["usage"]
 
-
-    print("Saving data to Notion...")
-    print(candidate)
-
     notion.pages.create(
         parent={"database_id": database_id},
         properties={
             "Nombre candidato": {"title": [{"text": {"content": full_name}}]},
             "Dni": {"rich_text": [{"text": {"content": dni}}]},
             "Sexo": {"select": {"name": "Femenino" if sex=="FEMENINO" else "Masculino"}},
-            "Postula a cargo": {"rich_text": [{"text": {"content": apply_position}}]},
+            "Postula a cargo": {
+                "select": {
+                    "name": {"PRESIDENTE DE LA REPÚBLICA": "PRESIDENTE DE LA REPÚBLICA", "PRIMER VICEPRESIDENTE DE LA REPÚBLICA": "1ER VICEPRESIDENTE", "SEGUNDO VICEPRESIDENTE DE LA REPÚBLICA": "2DO VICEPRESIDENTE"}[apply_position]
+                }
+            },
             "Partido político": {"rich_text": [{"text": {"content": political_party}}]},
             "Noticias": {"rich_text": [{"text": {"content": news_formatted}}]},
             "Nivel de riesgo": {

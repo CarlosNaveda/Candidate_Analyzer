@@ -10,7 +10,7 @@ client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 def news_llm_analyzer(candidate):
 
     #Buscamos las noticias del candidato y formateamos a texto
-    news = search_news(candidate)
+    news = search_news(candidate["full_name"])
     news_formatted = format_news(news)
 
     #Armamos el prompt
@@ -19,11 +19,11 @@ Eres un analista neutral que evalúa riesgos legales y controversias de candidat
 Debes analizar el siguiente candidato utilizando ÚNICAMENTE las noticias proporcionadas en el contexto.
 
 Candidato:
-Nombre: "KEIKO SOFIA FUJIMORI HIGUCHI"
-DNI: 10001088
-Sexo: FEMENINO
-Cargo al que postula: PRESIDENTE DE LA REPÚBLICA
-Partido político: FUERZA POPULAR
+Nombre: {candidate["full_name"]}
+DNI: {candidate["dni"]}
+Sexo: {candidate["sex"]}
+Cargo al que postula: {candidate["apply_position"]}
+Partido político: {candidate["political_party"]}
 
 Contexto (titulares de noticias):
 {news_formatted}
