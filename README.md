@@ -38,7 +38,7 @@ Los resultados se almacenan automáticamente en una base de datos de **Notion** 
 5. Los resultados se almacenan automáticamente en **Notion**.
 
 ---
-## Arquitectura del sistema
+# Arquitectura del sistema
 
 ```mermaid
 flowchart LR
