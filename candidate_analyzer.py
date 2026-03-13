@@ -19,6 +19,8 @@ def main():
     #Obtenemos los candidatos presidenciales y vicepresidenciales
     all_candidates_president_vicepresident = get_candidates_president_vicepresident()
     all_candidates_deputies = get_candidates_deputies()
+    all_candidates_senator = get_candidates_senators()
+    all_candidates_andean_parliament = get_candidates_andean_parliament()
 
     #Filtramos los candidatos
     candidates_presidential = filter_candidates(all_candidates_president_vicepresident, president_tag)
@@ -30,6 +32,8 @@ def main():
     candidate_evaluation(candidates_first_vicepresident)
     candidate_evaluation(candidates_second_vicepresident)
     candidate_evaluation(all_candidates_deputies)
+    candidate_evaluation(all_candidates_senator)
+    candidate_evaluation(all_candidates_andean_parliament)
 
     # Capturamos el tiempo de fin
     end_time = time.time()
@@ -43,6 +47,10 @@ def candidate_evaluation(candidate_group):
 
     # Evaluamos los candidatos dentro del grupo recibido
     for candidate in candidate_group:
+
+        if candidate["state"] != "INSCRITO":
+            continue
+
         # Por cada candidato llamamos al analizador LLM
         print("🔎 Analizando candidato: " + candidate["full_name"])
         result = news_llm_analyzer(candidate)

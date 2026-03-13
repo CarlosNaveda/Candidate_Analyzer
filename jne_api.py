@@ -14,7 +14,7 @@ def get_candidates_president_vicepresident():
     # Guardamos en variable el response
     data = response.json()
     data_candidates = data['data']
-    candidates = save_data_president_vicepresident(data_candidates)
+    candidates = save_data(data_candidates)
 
     return candidates
 
@@ -29,9 +29,39 @@ def get_candidates_deputies():
     # Guardamos en variable el response
     data = response.json()
     data_candidates = data['data']
-    candidates = save_data_deputies(data_candidates)
+    candidates = save_data_with_number(data_candidates)
 
     return candidates
+
+
+def get_candidates_senators():
+    api_url_candidatos_payload = create_payload_senator()
+    api_url_candidatos_headers = create_header()
+    response = create_request_post(api_url_candidatos_payload, api_url_candidatos_headers)
+
+    response.raise_for_status()
+
+    # Guardamos en variable el response
+    data = response.json()
+    data_candidates = data['data']
+    candidates = save_data_with_number(data_candidates)
+
+    return candidates
+
+def get_candidates_andean_parliament():
+    api_url_candidatos_payload = create_payload_andean_parliament()
+    api_url_candidatos_headers = create_header()
+    response = create_request_post(api_url_candidatos_payload, api_url_candidatos_headers)
+
+    response.raise_for_status()
+
+    # Guardamos en variable el response
+    data = response.json()
+    data_candidates = data['data']
+    candidates = save_data_with_number(data_candidates)
+
+    return candidates
+
 
 
 def create_payload_president_vicepresident():
@@ -86,7 +116,7 @@ def create_request_post(payload,headers):
 
     return response
 
-def save_data_president_vicepresident(data_candidatos):
+def save_data(data_candidatos):
 
     candidatos = []
 
@@ -99,12 +129,13 @@ def save_data_president_vicepresident(data_candidatos):
             "dni": candidato['strDocumentoIdentidad'],
             "sex": candidato['strSexo'],
             "apply_position": candidato['strCargo'],
-            "political_party": candidato['strOrganizacionPolitica']
+            "political_party": candidato['strOrganizacionPolitica'],
+            "state": candidato['strEstadoCandidato']
         })
 
     return candidatos
 
-def save_data_deputies(data_candidatos):
+def save_data_with_number(data_candidatos):
 
     candidatos = []
 
@@ -119,6 +150,8 @@ def save_data_deputies(data_candidatos):
             "apply_position": candidato['strCargo'],
             "political_party": candidato['strOrganizacionPolitica'],
             "number": candidato['intPosicion'],
+            "state": candidato['strEstadoCandidato']
         })
 
     return candidatos
+
