@@ -101,7 +101,6 @@ Tu respuesta debe contener únicamente el JSON.
         "usage": usage
     }
 
-
 def show_usage(usage):
 
     input_tokens = usage.input_tokens

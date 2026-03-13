@@ -18,7 +18,6 @@ def get_candidates_president_vicepresident():
 
     return candidates
 
-
 def get_candidates_deputies():
     api_url_candidatos_payload = create_payload_deputies()
     api_url_candidatos_headers = create_header()
@@ -32,7 +31,6 @@ def get_candidates_deputies():
     candidates = save_data_with_number(data_candidates)
 
     return candidates
-
 
 def get_candidates_senators():
     api_url_candidatos_payload = create_payload_senator()
@@ -62,8 +60,6 @@ def get_candidates_andean_parliament():
 
     return candidates
 
-
-
 def create_payload_president_vicepresident():
      api_url_candidatos_payload = {
         "idProcesoElectoral": 124,
@@ -72,7 +68,6 @@ def create_payload_president_vicepresident():
     }
 
      return api_url_candidatos_payload
-
 
 def create_payload_deputies():
     api_url_candidatos_payload = {

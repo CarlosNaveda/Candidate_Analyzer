@@ -1,5 +1,4 @@
 import time
-from google_news import search_news
 from jne_api import *
 from filter_candidates import filter_candidates
 from notion_api import save_data_safe_to_notion
@@ -16,7 +15,7 @@ def main():
     #Capturamos el tiempo de inicio
     start_time = time.time()
 
-    #Obtenemos los candidatos presidenciales y vicepresidenciales
+    #Obtenemos los candidatos
     all_candidates_president_vicepresident = get_candidates_president_vicepresident()
     all_candidates_deputies = get_candidates_deputies()
     all_candidates_senator = get_candidates_senators()
