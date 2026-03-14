@@ -10,7 +10,7 @@ client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 def news_llm_analyzer(candidate):
 
     #Buscamos las noticias del candidato y formateamos a texto
-    news = search_news(candidate["full_name"])
+    news = search_news(candidate["search_name"])
     news_formatted = format_news(news)
 
     #Armamos el prompt

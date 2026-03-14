@@ -117,9 +117,13 @@ def save_data(data_candidatos):
 
     # Recorremos toda la data
     for candidato in data_candidatos:
+
+        first_name = candidato['strNombres'].split()[0]
+        search_name = f"{first_name} {candidato['strApellidoPaterno']}"
         full_name = f"{candidato['strNombres']} {candidato['strApellidoPaterno']} {candidato['strApellidoMaterno']}"
 
         candidatos.append({
+            "search_name": search_name,
             "full_name": full_name,
             "dni": candidato['strDocumentoIdentidad'],
             "sex": candidato['strSexo'],
@@ -136,9 +140,13 @@ def save_data_with_number(data_candidatos):
 
     # Recorremos toda la data
     for candidato in data_candidatos:
+
+        first_name = candidato['strNombres'].split()[0]
+        search_name = f"{first_name} {candidato['strApellidoPaterno']}"
         full_name = f"{candidato['strNombres']} {candidato['strApellidoPaterno']} {candidato['strApellidoMaterno']}"
 
         candidatos.append({
+            "search_name": search_name,
             "full_name": full_name,
             "dni": candidato['strDocumentoIdentidad'],
             "sex": candidato['strSexo'],
