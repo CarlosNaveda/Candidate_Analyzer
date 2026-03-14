@@ -3,7 +3,6 @@ import urllib.parse
 import xml.etree.ElementTree as ET
 
 
-
 def search_news(name_candidate):
 
     headers = {
@@ -16,7 +15,6 @@ def search_news(name_candidate):
     search = urllib.parse.quote("Perú (denuncia OR corrupción OR investigación OR fiscalía OR lavado OR soborno OR caso)")
     url_google_news = f"https://news.google.com/rss/search?q={name_candidate_quotes}+{search}+Peru&hl=es-419&gl=PE&ceid=PE:es-419"
 
-    print(url_google_news)
     response = requests.get(url_google_news,headers=headers)
     response.raise_for_status()
 
@@ -32,7 +30,6 @@ def search_news(name_candidate):
         publish_date = noticia.find("pubDate").text
         source = noticia.find("source").text
 
-
         #En caso no exista estos elementos, sigamos a la siguiente iteración
         if title is None or news_url is None: continue
 
@@ -40,7 +37,7 @@ def search_news(name_candidate):
             "title": title,
             "news_url": news_url,
             "publish_date": publish_date,
-            "source": source,
+            "source": source
         })
 
 
