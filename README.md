@@ -1,7 +1,7 @@
 # Candidate Analyzer (Versión 1.0)
 Sistema que analiza candidatos de elecciones peruanas 2026 utilizando noticias públicas y el LLM (**gpt-4.1-mini**) para identificar posibles riesgos o controversias.  
 Los resultados se almacenan automáticamente en una base de datos de **Notion** para su análisis y visualización.
-
+![Candidate Analyzer](assets/preview_candidate_analyzer.png)
 ---
 # Resultados de ejecución
 
