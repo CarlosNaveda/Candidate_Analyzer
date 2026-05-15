@@ -1,7 +1,10 @@
-![Candidate Analyzer](assets/preview_candidate_analyzer.png)
-
 # Candidate Analyzer (Versión 1.0)
-
+![Python](https://img.shields.io/badge/Python-3-3776AB?style=flat&logo=python&logoColor=white)
+![OpenAI](https://img.shields.io/badge/OpenAI-gpt--4.1--mini-412991?style=flat&logo=openai&logoColor=white)
+![Notion](https://img.shields.io/badge/Notion_API-000000?style=flat&logo=notion&logoColor=white)
+![Google News](https://img.shields.io/badge/Google_News-4285F4?style=flat&logo=google&logoColor=white)
+![JNE](https://img.shields.io/badge/JNE_API-D40000?style=flat&logoColor=white)
+![Candidate Analyzer](assets/preview_candidate_analyzer.png)
 Sistema que analiza candidatos de elecciones peruanas 2026 utilizando noticias públicas y el LLM (**gpt-4.1-mini**) para identificar posibles riesgos o controversias.  
 Los resultados se almacenan automáticamente en una base de datos de **Notion** para su análisis y visualización.
 
@@ -21,15 +24,6 @@ Los resultados se almacenan automáticamente en una base de datos de **Notion** 
 | Senadores | 955 | 4678.47 |
 | Parlamento Andino | 423 | 2074.13 |
 | **Total** | **2694** | **13158.71** |
-
----
-# Stack
-
-- Python
-- Google News
-- OpenAI API (LLM: **gpt-4.1-mini**)
-- Notion API
-- JNE API
 
 ---
 # Flujo del sistema
